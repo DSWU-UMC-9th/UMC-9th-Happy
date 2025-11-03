@@ -12,7 +12,7 @@ import java.util.List;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
 
-    public List<ReviewResponseDto> getReviews(Long storeId, Integer rating) {
-        return reviewRepository.findReviews(storeId, rating);
-    }
+//    public List<ReviewResponseDto> getReviews(Long storeId, Integer rating) {
+//        return reviewRepository.findReviews(storeId, rating);
+//    }
 }
