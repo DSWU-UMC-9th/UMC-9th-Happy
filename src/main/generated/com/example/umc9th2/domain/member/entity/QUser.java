@@ -48,8 +48,6 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath phone = createString("phone");
 
-    public final NumberPath<Integer> point = createNumber("point", Integer.class);
-
     public final ListPath<com.example.umc9th2.domain.review.entity.Review, com.example.umc9th2.domain.review.entity.QReview> reviews = this.<com.example.umc9th2.domain.review.entity.Review, com.example.umc9th2.domain.review.entity.QReview>createList("reviews", com.example.umc9th2.domain.review.entity.Review.class, com.example.umc9th2.domain.review.entity.QReview.class, PathInits.DIRECT2);
 
     //inherited

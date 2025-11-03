@@ -27,8 +27,6 @@ public class QStore extends EntityPathBase<Store> {
 
     public final StringPath address = createString("address");
 
-    public final com.example.umc9th2.domain.member.entity.QFoodType foodType;
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final ListPath<com.example.umc9th2.domain.mission.entity.Mission, com.example.umc9th2.domain.mission.entity.QMission> missions = this.<com.example.umc9th2.domain.mission.entity.Mission, com.example.umc9th2.domain.mission.entity.QMission>createList("missions", com.example.umc9th2.domain.mission.entity.Mission.class, com.example.umc9th2.domain.mission.entity.QMission.class, PathInits.DIRECT2);
@@ -59,7 +57,6 @@ public class QStore extends EntityPathBase<Store> {
 
     public QStore(Class<? extends Store> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.foodType = inits.isInitialized("foodType") ? new com.example.umc9th2.domain.member.entity.QFoodType(forProperty("foodType")) : null;
         this.region = inits.isInitialized("region") ? new QRegion(forProperty("region")) : null;
     }
 
