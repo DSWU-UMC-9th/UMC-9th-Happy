@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "Owner_Reply")
+@Table(name = "owner_reply")
 public class OwnerReply extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
