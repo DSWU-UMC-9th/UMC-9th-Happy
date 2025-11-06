@@ -4,10 +4,10 @@ import com.example.umc9th2.domain.member.entity.User;
 import com.example.umc9th2.domain.store.entity.Store;
 import com.example.umc9th2.global.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Builder
+@AllArgsConstructor
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -36,5 +36,11 @@ public class Review extends BaseEntity {
 
     @OneToOne(mappedBy = "review")
     private OwnerReply ownerReply;
+
+    public Review(Store store, User user, String content) {
+        this.store = store;
+        this.user = user;
+        this.reviewText = content;
+    }
 }
 
