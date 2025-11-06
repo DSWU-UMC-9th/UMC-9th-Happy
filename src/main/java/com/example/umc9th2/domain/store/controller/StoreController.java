@@ -17,7 +17,7 @@ public class StoreController {
     private final StoreService storeService;
 
     @GetMapping("/search")
-    public ResponseEntity<ApiResponse<Page<StoreResponse>>> searchStores(
+    public ResponseEntity<ApiResponse<Page<StoreResponse>>> searchStores(   //응답 통일
             @RequestParam(required = false) String region,
             @RequestParam(required = false) String name,
             @RequestParam(defaultValue = "latest") String sort,
