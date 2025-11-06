@@ -1,5 +1,6 @@
 package com.example.umc9th2.domain.store.entity;
 
+import com.example.umc9th2.domain.member.entity.FoodType;
 import com.example.umc9th2.domain.mission.entity.Mission;
 import com.example.umc9th2.domain.review.entity.Review;
 import jakarta.persistence.*;
@@ -13,7 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "Store")
+@Table(name = "store")
 public class Store {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +32,10 @@ public class Store {
 
     @Column(length = 50, nullable = false)
     private String ownerCode;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "food_type_id")
+    private FoodType foodType;
 
     @OneToMany(mappedBy = "store")
     private List<Review> reviews = new ArrayList<>();
