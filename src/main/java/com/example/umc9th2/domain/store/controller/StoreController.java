@@ -1,7 +1,9 @@
 package com.example.umc9th2.domain.store.controller;
 
+import com.example.umc9th2.domain.store.code.StoreSuccessCode;
 import com.example.umc9th2.domain.store.dto.StoreResponse;
 import com.example.umc9th2.domain.store.service.StoreService;
+import com.example.umc9th2.global.apiPayload.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +17,7 @@ public class StoreController {
     private final StoreService storeService;
 
     @GetMapping("/search")
-    public ResponseEntity<Page<StoreResponse>> searchStores(
+    public ResponseEntity<ApiResponse<Page<StoreResponse>>> searchStores(
             @RequestParam(required = false) String region,
             @RequestParam(required = false) String name,
             @RequestParam(defaultValue = "latest") String sort,
@@ -23,6 +25,11 @@ public class StoreController {
             @RequestParam(defaultValue = "10") int size
     ) {
         Page<StoreResponse> result = storeService.searchStores(region, name, sort, page, size);
-        return ResponseEntity.ok(result);
+        return ResponseEntity
+                .status(StoreSuccessCode.STORE_SEARCH_SUCCESS.getStatus())
+                .body(ApiResponse.onSuccess(
+                        StoreSuccessCode.STORE_SEARCH_SUCCESS,
+                        result
+                ));
     }
 }
