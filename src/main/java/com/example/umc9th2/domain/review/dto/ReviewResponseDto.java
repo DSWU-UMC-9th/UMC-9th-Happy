@@ -1,9 +1,11 @@
 package com.example.umc9th2.domain.review.dto;
 
+import lombok.AllArgsConstructor;
 //import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class ReviewResponseDto {
 
     private String nickname;

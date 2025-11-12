@@ -10,7 +10,7 @@ import java.lang.reflect.Member;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "User_FoodPreference")
+@Table(name = "userFoodPreference")
 public class UserFoodPreference {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class UserFoodPreference {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FoodType_id", nullable = false)
+    @JoinColumn(name = "foodType_id", nullable = false)
     private FoodType foodType;
 
     public UserFoodPreference(User user, FoodType foodType) {
