@@ -18,6 +18,26 @@ spring:
       hibernate:
         format_sql: true # 출력되는 SQL 쿼리를 보기 좋게 포맷팅
 
+  profiles:
+    active: local   # 기본은 로컬 환경
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  discord:
+    webhook:
+      url: ""  # 로컬은 비워둔다 (알림 안 감)
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  discord:
+    webhook:
+      url: ${DISCORD_WEBHOOK_URL}  # 개발 서버용 Webhook URL
+
 #  h2:
 #    console:
 #      enabled: true

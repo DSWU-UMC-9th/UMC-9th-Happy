@@ -27,11 +27,24 @@ public class UserMission extends BaseEntity {
     private Mission mission;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "ENUM('진행중','진행완료') DEFAULT '진행중'")
+    @Column(columnDefinition = "ENUM('inProgress','progressCompleted') DEFAULT 'inProgress'")
     private MissionStatus status;
 
     private LocalDateTime completedAt;
 
     @Column(columnDefinition = "INT DEFAULT 0")
     private Integer pointEarned;
+
+    public void setStatus(MissionStatus status) {
+        this.status = status;
+    }
+
+    public void setCompletedAt(LocalDateTime completedAt) {
+        this.completedAt = completedAt;
+    }
+
+    public void setPointEarned(Integer pointEarned) {
+        this.pointEarned = pointEarned;
+    }
+
 }
