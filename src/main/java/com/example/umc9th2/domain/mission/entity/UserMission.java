@@ -4,6 +4,7 @@ import com.example.umc9th2.domain.member.entity.User;
 import com.example.umc9th2.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -34,6 +35,13 @@ public class UserMission extends BaseEntity {
 
     @Column(columnDefinition = "INT DEFAULT 0")
     private Integer pointEarned;
+
+    @Builder
+    public UserMission(User user, Mission mission, MissionStatus missionStatus) {
+        this.user = user;
+        this.mission = mission;
+        this.status = missionStatus;
+    }
 
     public void setStatus(MissionStatus status) {
         this.status = status;
