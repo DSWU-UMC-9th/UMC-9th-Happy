@@ -1,5 +1,6 @@
 package com.example.umc9th2.domain.mission.entity;
 
+import com.example.umc9th2.domain.member.entity.User;
 import com.example.umc9th2.domain.store.entity.Store;
 import com.example.umc9th2.global.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -18,6 +19,13 @@ public class Mission extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @Enumerated(EnumType.STRING)
+    private MissionStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id", nullable = false)

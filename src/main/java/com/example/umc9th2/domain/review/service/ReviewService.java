@@ -9,6 +9,8 @@ import com.example.umc9th2.domain.store.entity.Store;
 import com.example.umc9th2.domain.store.repository.StoreRepository;
 import com.example.umc9th2.domain.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,6 +46,25 @@ public class ReviewService {
 
         return reviewRepository.save(review);
 
+    }
+    /** 내가 작성한 리뷰 조회**/
+    public ReviewResDTO.ReviewListResult getMyReviews(Long userId, int page) {
+        PageRequest pageable = PageRequest.of(page - 1, 10); // 한 페이지 10개
+        Page<Review> reviewPage = reviewRepository.findByUserId(userId, pageable);
+
+        // Stream으로 변환
+        List<ReviewResDTO.ReviewDetail> reviewDetails = reviewPage.getContent().stream()
+                .map(review -> ReviewResDTO.ReviewDetail.builder()
+                        .nickname(review.getUser().getNickname())
+                        .rating(review.getRating())
+                        .reviewText(review.getReviewText())
+                        .reviewImage(review.getReviewImage())
+                        .build())
+                .toList();
+
+        return ReviewResDTO.ReviewListResult.builder()
+                .reviews(reviewDetails)
+                .build();
     }
 
     /**
