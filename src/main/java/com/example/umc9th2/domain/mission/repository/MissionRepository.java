@@ -2,6 +2,9 @@ package com.example.umc9th2.domain.mission.repository;
 
 import com.example.umc9th2.domain.mission.dto.HomeMissionDto;
 import com.example.umc9th2.domain.mission.entity.Mission;
+import com.example.umc9th2.domain.mission.entity.MissionStatus;
+import com.example.umc9th2.domain.mission.entity.UserMission;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -35,4 +38,12 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
             @Param("lastCreatedAt") LocalDateTime lastCreatedAt,
             Pageable pageable
     );
+
+    Page<UserMission> findByUser_IdAndStatus(Long userId, MissionStatus status, Pageable pageable);
+
+    // 특정 가게(store) ID로 미션 목록 조회
+    List<Mission> findByStore_Id(Long storeId);
+
+    // 상태까지 필터링하고 페이징 처리
+    Page<Mission> findByStore_IdAndStatus(Long storeId, MissionStatus status, Pageable pageable);
 }

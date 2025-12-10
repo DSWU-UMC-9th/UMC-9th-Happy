@@ -6,6 +6,7 @@ import com.example.umc9th2.domain.member.exception.UserException;
 import com.example.umc9th2.domain.member.repository.UserRepository;
 import com.example.umc9th2.domain.mission.code.MissionErrorCode;
 import com.example.umc9th2.domain.mission.dto.MissionChallengeResponse;
+import com.example.umc9th2.domain.mission.dto.MissionResDTO;
 import com.example.umc9th2.domain.mission.entity.Mission;
 import com.example.umc9th2.domain.mission.entity.MissionStatus;
 import com.example.umc9th2.domain.mission.entity.UserMission;
@@ -14,10 +15,13 @@ import com.example.umc9th2.domain.mission.repository.MissionRepository;
 import com.example.umc9th2.domain.mission.repository.UserMissionRepository;
 import jdk.jshell.spi.ExecutionControl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -77,4 +81,34 @@ public class MissionService {
                 userMission.getStatus().name()
         );
     }
+
+
+    public MissionResDTO.MissionListResult getInProgressMissions(Long userId, int page) {
+        PageRequest pageable = PageRequest.of(page - 1, 10);
+
+        List<UserMission> userMissions = userMissionRepository
+                .findByUser_IdAndStatus(userId, MissionStatus.inProgress, pageable)
+                .getContent();
+
+        List<MissionResDTO.MissionDetail> missionDetails = userMissions.stream()
+                .map(um -> MissionResDTO.MissionDetail.builder()
+                        .userMissionId(um.getId())
+                        .missionName(um.getMission().getMissionName())
+                        .storeName(um.getMission().getStore().getStoreName())
+                        .status(um.getStatus().name())
+                        .pointEarned(um.getPointEarned())
+                        .build())
+                .collect(Collectors.toList());
+
+        return MissionResDTO.MissionListResult.builder()
+                .missions(missionDetails)
+                .build();
+    }
+
+
+    public List<Mission> getMissionsByStore(Long storeId) {
+        return missionRepository.findByStore_Id(storeId);
+    }
+
+
 }
