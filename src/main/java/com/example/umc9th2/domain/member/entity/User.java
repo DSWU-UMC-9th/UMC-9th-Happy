@@ -2,6 +2,7 @@ package com.example.umc9th2.domain.member.entity;
 
 import com.example.umc9th2.domain.mission.entity.UserMission;
 import com.example.umc9th2.domain.review.entity.Review;
+import com.example.umc9th2.global.auth.enums.Role;
 import com.example.umc9th2.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -22,10 +23,10 @@ public class User extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50)
     private String name;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50)
     private String nickname;
 
     @Enumerated(EnumType.STRING)
@@ -36,10 +37,16 @@ public class User extends BaseEntity {
     @Column(length = 255)
     private String address;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100, unique = true)
     private String email;
 
-    @Column(length = 20, nullable = false)
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @Column(length = 20)
     private String phone;
 
     // --- Relations ---
@@ -54,14 +61,15 @@ public class User extends BaseEntity {
 
     // --- Builder ---
     @Builder
-    private User(String name, String nickname, Gender gender, LocalDate birthDate,
-                   String address, String email, String phone) {
-        this.name = name;
-        this.nickname = nickname;
-        this.gender = gender;
-        this.birthDate = birthDate;
-        this.address = address;
+    public User(String email, String password, String name, Role role) {
         this.email = email;
-        this.phone = phone;
+        this.password = password;
+        this.name = name;
+        this.role = role;
+    }
+
+    public void updatePasswordAndRole(String password, Role role) {
+        this.password = password;
+        this.role = role;
     }
 }
