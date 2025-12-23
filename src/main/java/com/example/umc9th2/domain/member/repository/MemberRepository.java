@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface MemberRepository extends JpaRepository<User, Long> {
 
     @Query("""
@@ -21,4 +23,9 @@ public interface MemberRepository extends JpaRepository<User, Long> {
     GROUP BY u.id, u.nickname, u.email, u.phone
 """)
     MyPageDto findMyPageInfo(@Param("userId") Long userId);
+
+    Optional<User> findByEmail(String email);
+
+
+
 }
